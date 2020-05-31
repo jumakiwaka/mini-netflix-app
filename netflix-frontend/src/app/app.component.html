@@ -1,20 +1,47 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<main class="wrapper" style="padding-left: 10px;">
+  <section
+    class="currentThumbnailFrame"
+    *ngIf="movies[0]"
+    [ngStyle]="{
+      background:
+        'url(https://image.tmdb.org/t/p/w780' +
+        movies[currentIndex].poster_path +
+        ')',
+      'background-repeat': 'no-repeat',
+      'background-size': '100% 105%'
+    }"
+  ></section>
+  <section class="moviemeta" *ngIf="movies[0]">
+    <p class="title">{{ movies[currentIndex].title }}</p>
+    <p class="adult" *ngIf="movies[currentIndex].adult">18+</p>
+    <p class="adult" *ngIf="!movies[currentIndex].adult">16+</p>
+    <p class="avgvotes">
+      <span
+        class="fa fa-star checked"
+        *ngFor="let vote of setArray(movies[currentIndex].vote_average)"
+      ></span>
+    </p>
 
+    <p class="releasedate">
+      Release year {{ movies[currentIndex].release_date.split("-")[0] }}
+    </p>
+    <p class="overview">{{ movies[currentIndex].overview }}</p>
+    <!-- {{ movies[0] | json }} -->
+  </section>
+  <section class="movieslider">
+    <span *ngFor="let movie of movies; let i = index">
+      <article
+        class="smallthumbnail"
+        *ngIf="movie.poster_path !== movies[currentIndex].poster_path"
+        [ngStyle]="{
+          background:
+            'url(https://image.tmdb.org/t/p/w780' + movie.poster_path + ')',
+          'background-repeat': 'no-repeat',
+          'background-size': '100% 105%'
+        }"
+        (click)="viewFilmDetails(i)"
+      ></article>
+    </span>
+  </section>
+</main>
