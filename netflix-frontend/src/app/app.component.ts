@@ -9,16 +9,18 @@ import { Movies } from "./models/movies";
 })
 export class AppComponent implements OnInit {
   title = "mini-netflix";
-  movies: Array<Object> = [];
-  shows: Array<Object> = [];
+  movies: Array<any> = [];
+  shows: Array<object> = [];
   currentPage: Number;
   poster: String;
   currentIndex: Number;
-  rating: Array<Number>;
+  rating: String;
   constructor(private _movieService: MoviesService) {}
 
   setArray(n: number): Array<Number> {
-    return Array(Math.round(n));
+    this.rating = `${100 * (n - Math.floor(n))}%`;
+
+    return Array(Math.floor(n));
   }
 
   ngOnInit() {
@@ -27,12 +29,25 @@ export class AppComponent implements OnInit {
       this.currentPage = page;
       this.movies = results;
       this.currentIndex = 0;
+
       // this.poster = `https://image.tmdb.org/t/p/w780${this.movies[0].poster_url}`;
       // console.log(this.movies);
     });
   }
+
+  viewNextFilms() {
+    const page = Number(this.currentPage) + 1;
+    this._movieService.getPopulorMovies(page).subscribe((movies: Movies) => {
+      const { page, results } = movies;
+      this.currentPage = page;
+      this.movies = this.movies.concat(results);
+
+      // this.poster = `https://image.tmdb.org/t/p/w780${this.movies[0].poster_url}`;
+      // console.log(this.movies, results);
+    });
+  }
+
   viewFilmDetails(index: Number) {
-    console.log(index);
     this.currentIndex = index;
   }
 }

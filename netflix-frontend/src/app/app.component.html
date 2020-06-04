@@ -4,28 +4,33 @@
     class="currentThumbnailFrame"
     *ngIf="movies[0]"
     [ngStyle]="{
-      background:
+      'background-image':
         'url(https://image.tmdb.org/t/p/w780' +
         movies[currentIndex].poster_path +
         ')',
       'background-repeat': 'no-repeat',
       'background-size': '100% 105%'
     }"
+    style="background-repeat: no-repeat;"
   ></section>
   <section class="moviemeta" *ngIf="movies[0]">
     <p class="title">{{ movies[currentIndex].title }}</p>
     <p class="adult" *ngIf="movies[currentIndex].adult">18+</p>
     <p class="adult" *ngIf="!movies[currentIndex].adult">16+</p>
-    <p class="avgvotes">
-      <span
-        class="fa fa-star checked"
-        *ngFor="let vote of setArray(movies[currentIndex].vote_average)"
-      ></span>
-    </p>
+    <div class="votes-release">
+      <p class="avgvotes">
+        {{ movies[currentIndex].vote_average }}
+        <span
+          class="fa fa-star checked"
+          *ngFor="let vote of setArray(movies[currentIndex].vote_average)"
+        ></span>
+        <span class="fa fa-star-half checked" *ngIf="rating !== '0%'"></span>
+      </p>
 
-    <p class="releasedate">
-      Release year {{ movies[currentIndex].release_date.split("-")[0] }}
-    </p>
+      <p class="releasedate">
+        Release year: {{ movies[currentIndex].release_date.split("-")[0] }}
+      </p>
+    </div>
     <p class="overview">{{ movies[currentIndex].overview }}</p>
     <!-- {{ movies[0] | json }} -->
   </section>
@@ -43,5 +48,6 @@
         (click)="viewFilmDetails(i)"
       ></article>
     </span>
+    <i class="fa fa-angle-right nextFilms" (click)="viewNextFilms()"></i>
   </section>
 </main>

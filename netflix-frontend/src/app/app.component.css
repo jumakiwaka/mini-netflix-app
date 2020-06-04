@@ -53,12 +53,14 @@
   right: 2vw;
 }
 
+.votes-release p {
+  display: inline-block;
+}
+
 .releasedate {
   width: fit-content;
   border-radius: 3px;
-  position: absolute;
-  top: 7.5vw;
-  right: 2vw;
+  float: right;
 }
 
 .overview {
@@ -99,8 +101,18 @@
   width: 20%;
   height: 80%;
   margin: 1vw;
-  z-index: 1000;
+  z-index: 1;
   display: inline-block;
+}
+
+.nextFilms {
+  z-index: 2;
+  color: var(--font-color-red);
+  font-size: 5vw;
+  position: sticky;
+  bottom: 9vh;
+  right: 0vw;
+  cursor: pointer;
 }
 /* .currentThumbnailFrame img {
   width: 100%;
